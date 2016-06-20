@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160620201154) do
+ActiveRecord::Schema.define(version: 20160620203626) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.integer  "resource_id",   limit: 4,     null: false
@@ -47,7 +47,6 @@ ActiveRecord::Schema.define(version: 20160620201154) do
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "armies", force: :cascade do |t|
-    t.string "name", limit: 255, null: false
   end
 
   create_table "army_list_unit_troops", force: :cascade do |t|
@@ -125,6 +124,15 @@ ActiveRecord::Schema.define(version: 20160620201154) do
 
   add_index "army_lists", ["army_id"], name: "index_army_lists_on_army_id", using: :btree
   add_index "army_lists", ["user_id"], name: "index_army_lists_on_user_id", using: :btree
+
+  create_table "army_translations", force: :cascade do |t|
+    t.integer "army_id", limit: 4,   null: false
+    t.string  "locale",  limit: 255, null: false
+    t.string  "name",    limit: 255, null: false
+  end
+
+  add_index "army_translations", ["army_id"], name: "index_army_translations_on_army_id", using: :btree
+  add_index "army_translations", ["locale"], name: "index_army_translations_on_locale", using: :btree
 
   create_table "equipments", force: :cascade do |t|
     t.integer "unit_id",  limit: 4,   null: false
