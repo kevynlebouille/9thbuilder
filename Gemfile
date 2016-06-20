@@ -42,9 +42,11 @@ group :development, :test do
   gem 'spring'
 end
 
+gem 'globalize'
 gem 'routing-filter'
 gem 'http_accept_language'
 gem 'activeadmin', github: 'activeadmin/activeadmin'
+gem 'activeadmin-globalize', github: 'fabn/activeadmin-globalize', branch: 'develop'
 gem 'jquery-ui-rails'
 gem 'devise'
 gem 'seedbank'
