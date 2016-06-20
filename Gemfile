@@ -42,7 +42,6 @@ group :development, :test do
   gem 'spring'
 end
 
-gem 'dotenv-rails'
 gem 'routing-filter'
 gem 'http_accept_language'
 gem 'activeadmin', github: 'activeadmin/activeadmin'

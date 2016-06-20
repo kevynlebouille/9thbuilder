@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151218054317) do
+ActiveRecord::Schema.define(version: 20160620201154) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.integer  "resource_id",   limit: 4,     null: false
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20151218054317) do
     t.integer  "unit_id",          limit: 4
     t.integer  "unit_category_id", limit: 4
     t.string   "name",             limit: 255
-    t.decimal  "value_points",                   precision: 7, scale: 1
+    t.decimal  "value_points",                   precision: 8, scale: 2
     t.integer  "size",             limit: 4
     t.integer  "position",         limit: 4
     t.datetime "created_at"
@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 20151218054317) do
     t.integer  "army_id",      limit: 4,                             null: false
     t.integer  "user_id",      limit: 4,                             null: false
     t.string   "name",         limit: 255,                           null: false
-    t.decimal  "value_points",               precision: 7, scale: 1, null: false
+    t.decimal  "value_points",               precision: 8, scale: 2, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "notes",        limit: 65535
@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(version: 20151218054317) do
   create_table "extra_items", force: :cascade do |t|
     t.integer "extra_item_category_id", limit: 4,                           null: false
     t.string  "name",                   limit: 255,                         null: false
-    t.decimal "value_points",                       precision: 7, scale: 1, null: false
+    t.decimal "value_points",                       precision: 8, scale: 2, null: false
   end
 
   add_index "extra_items", ["extra_item_category_id"], name: "index_extra_items_on_extra_item_category_id", using: :btree
@@ -159,7 +159,7 @@ ActiveRecord::Schema.define(version: 20151218054317) do
     t.integer "magic_item_category_id", limit: 4,                                           null: false
     t.integer "army_id",                limit: 4
     t.string  "name",                   limit: 255,                                         null: false
-    t.decimal "value_points",                       precision: 7, scale: 1,                 null: false
+    t.decimal "value_points",                       precision: 8, scale: 2,                 null: false
     t.integer "override_id",            limit: 4
     t.boolean "is_multiple",                                                default: false, null: false
   end
@@ -196,7 +196,7 @@ ActiveRecord::Schema.define(version: 20151218054317) do
     t.integer "unit_id",        limit: 4,                           null: false
     t.integer "troop_type_id",  limit: 4
     t.string  "name",           limit: 255,                         null: false
-    t.decimal "value_points",               precision: 7, scale: 1
+    t.decimal "value_points",               precision: 8, scale: 2
     t.integer "position",       limit: 4,                           null: false
     t.string  "M",              limit: 5
     t.string  "WS",             limit: 5
@@ -225,7 +225,7 @@ ActiveRecord::Schema.define(version: 20151218054317) do
     t.integer "unit_id",            limit: 4,                                           null: false
     t.integer "parent_id",          limit: 4
     t.string  "name",               limit: 255,                                         null: false
-    t.decimal "value_points",                   precision: 7, scale: 1
+    t.decimal "value_points",                   precision: 8, scale: 2
     t.integer "position",           limit: 4,                                           null: false
     t.boolean "is_per_model",                                                           null: false
     t.boolean "is_magic_items",                                                         null: false
@@ -246,7 +246,7 @@ ActiveRecord::Schema.define(version: 20151218054317) do
     t.string  "name",             limit: 255,                                           null: false
     t.integer "min_size",         limit: 4,                             default: 1,     null: false
     t.integer "max_size",         limit: 4
-    t.decimal "value_points",                   precision: 7, scale: 1
+    t.decimal "value_points",                   precision: 8, scale: 2
     t.string  "magic",            limit: 255
     t.text    "notes",            limit: 65535
     t.boolean "is_unique",                                              default: false, null: false
