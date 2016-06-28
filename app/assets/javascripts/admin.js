@@ -1,4 +1,8 @@
 jQuery(function($) {
+  // TRANSLATION FORMS
+  $('.activeadmin-translations > ul > li > a[href=".locale-en"]').html('<i class="flag flag-en" title="English"></i>');
+  $('.activeadmin-translations > ul > li > a[href=".locale-fr"]').html('<i class="flag flag-fr" title="French"></i>');
+
   // UNIT OPTION - ARMY_FILTER
   $('#unit_option_unit_id').clone().attr('id', 'unit_option_unit_id_clone').hide().appendTo('body');
   $('#unit_option_parent_id').clone().attr('id', 'unit_option_parent_id_clone').hide().appendTo('body');
