@@ -22,7 +22,7 @@ ActiveAdmin.register Army do
   end
 
   form do |f|
-    # f.semantic_errors
+    f.semantic_errors
     f.inputs 'Translated fields' do
       f.translated_inputs '', switch_locale: false do |t|
         t.input :name

@@ -1,9 +1,13 @@
 ActiveAdmin.register Unit do
   menu priority: 3
 
-  permit_params :army_id, :unit_category_id, :name, :value_points, :min_size, :max_size, :magic, :notes, :is_unique
+  permit_params :army_id, :unit_category_id, :name, :value_points, :min_size, :max_size, :magic, :notes, :is_unique, translations_attributes: [:id, :locale, :name, :magic, :notes, :_destroy]
 
   controller do
+    def scoped_collection
+      super.includes(:translations, { army: [:translations] }, { unit_category: [:translations] })
+    end
+
     def create
       create! { new_admin_unit_url }
     end
@@ -26,32 +30,35 @@ ActiveAdmin.register Unit do
 
   filter :army
   filter :unit_category
-  filter :name
+  filter :translations_name, as: :string, label: 'Name'
   filter :value_points
 
   index do
     selectable_column
     id_column
-    column :army, sortable: :army_id
-    column :unit_category, sortable: :unit_category_id
-    column :name
-    column :min_size
-    column :max_size
+    column :army, sortable: 'army_translations.name'
+    column :unit_category, sortable: 'unit_category_translations.name'
+    column :name, sortable: 'unit_translations.name'
     column :value_points
-    column :is_unique
+    translation_status_flags
     actions
   end
 
   form do |f|
-    f.inputs do
-      f.input :army, collection: Army.order(:name)
+    f.semantic_errors
+    f.inputs 'Translated fields' do
+      f.translated_inputs '', switch_locale: false do |t|
+        t.input :name
+        t.input :magic
+        t.input :notes, input_html: { rows: 10 }
+      end
+    end
+    f.inputs 'Common fields' do
+      f.input :army, collection: Army.includes(:translations).order(:name)
       f.input :unit_category
-      f.input :name
       f.input :value_points
       f.input :min_size
       f.input :max_size
-      f.input :magic
-      f.input :notes
       f.input :is_unique
     end
     f.actions
@@ -62,12 +69,12 @@ ActiveAdmin.register Unit do
       row :id
       row :army
       row :unit_category
-      row :name
+      translated_row :name
       row :min_size
       row :max_size
       row :value_points
-      row :magic
-      row :notes
+      translated_row :magic
+      translated_row :notes
       row :is_unique
     end
 

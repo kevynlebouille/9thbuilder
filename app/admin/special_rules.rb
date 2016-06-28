@@ -1,9 +1,13 @@
 ActiveAdmin.register SpecialRule do
   menu priority: 6
 
-  permit_params :unit_id, :troop_id, :name, :position
+  permit_params :unit_id, :troop_id, :name, :position, translations_attributes: [:id, :locale, :name, :_destroy]
 
   controller do
+    def scoped_collection
+      super.includes(:translations, unit: [:translations], troop: [:translations])
+    end
+
     def create
       create! { new_admin_special_rule_url }
     end
@@ -34,27 +38,42 @@ ActiveAdmin.register SpecialRule do
     link_to 'New Special Rule', new_admin_special_rule_path('special_rule[unit_id]' => special_rule.unit)
   end
 
-  filter :unit
-  filter :name
+  filter :unit, collection: proc { Unit.includes(:translations, army: [:translations]).order('army_translations.name', 'unit_translations.name').collect { |r| [r.army.name.to_s + ' - ' + r.name.to_s, r.id] } }
+  filter :translations_name, as: :string, label: 'Name'
 
   index do
     selectable_column
     id_column
     column :unit, sortable: :unit_id
-    column :name
+    column :name, sortable: 'special_rule_translations.name'
     column :troop, sortable: :troop_id
-    column :position
+    translation_status_flags
     actions
   end
 
   form do |f|
-    f.inputs do
-      f.input :army_filter, as: :select, collection: Army.order(:name), disabled: Army.disabled.pluck(:id), label: 'Army FILTER'
-      f.input :unit, collection: Unit.includes(:army).order('armies.name', 'units.name').collect { |u| [u.army.name + ' - ' + u.name, u.id] }
-      f.input :troop, collection: Troop.includes(unit: [:army]).order('armies.name', 'units.name', 'troops.position').collect { |t| [t.unit.army.name + ' - ' + t.unit.name + ' - ' + t.name, t.id] }
-      f.input :name
+    f.semantic_errors
+    f.inputs 'Translated fields' do
+      f.translated_inputs '', switch_locale: false do |t|
+        t.input :name
+      end
+    end
+    f.inputs 'Common fields' do
+      f.input :army_filter, as: :select, collection: Army.includes(:translations).order(:name), disabled: Army.disabled.pluck(:id), label: 'Army FILTER'
+      f.input :unit, collection: Unit.includes(:translations, army: [:translations]).order('army_translations.name', 'unit_translations.name').collect { |u| [u.army.name.to_s + ' - ' + u.name.to_s, u.id] }
+      f.input :troop, collection: Troop.includes(:translations, unit: [:translations, army: [:translations]]).order('army_translations.name', 'unit_translations.name', 'troops.position').collect { |t| [t.unit.army.name.to_s + ' - ' + t.unit.name.to_s + ' - ' + t.name.to_s, t.id] }
       f.input :position
     end
     f.actions
+  end
+
+  show do
+    attributes_table do
+      row :id
+      row :unit
+      row :troop
+      translated_row :name
+      row :position
+    end
   end
 end
