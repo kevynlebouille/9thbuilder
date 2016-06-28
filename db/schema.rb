@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160620203626) do
+ActiveRecord::Schema.define(version: 20160628204302) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.integer  "resource_id",   limit: 4,     null: false
@@ -134,10 +134,18 @@ ActiveRecord::Schema.define(version: 20160620203626) do
   add_index "army_translations", ["army_id"], name: "index_army_translations_on_army_id", using: :btree
   add_index "army_translations", ["locale"], name: "index_army_translations_on_locale", using: :btree
 
+  create_table "equipment_translations", force: :cascade do |t|
+    t.integer "equipment_id", limit: 4,   null: false
+    t.string  "locale",       limit: 255, null: false
+    t.string  "name",         limit: 255, null: false
+  end
+
+  add_index "equipment_translations", ["equipment_id"], name: "index_equipment_translations_on_equipment_id", using: :btree
+  add_index "equipment_translations", ["locale"], name: "index_equipment_translations_on_locale", using: :btree
+
   create_table "equipments", force: :cascade do |t|
-    t.integer "unit_id",  limit: 4,   null: false
-    t.string  "name",     limit: 255, null: false
-    t.integer "position", limit: 4,   null: false
+    t.integer "unit_id",  limit: 4, null: false
+    t.integer "position", limit: 4, null: false
     t.integer "troop_id", limit: 4
   end
 
@@ -145,67 +153,131 @@ ActiveRecord::Schema.define(version: 20160620203626) do
   add_index "equipments", ["unit_id"], name: "index_equipments_on_unit_id", using: :btree
 
   create_table "extra_item_categories", force: :cascade do |t|
-    t.integer "army_id", limit: 4,   null: false
-    t.string  "name",    limit: 255, null: false
+    t.integer "army_id", limit: 4, null: false
   end
 
   add_index "extra_item_categories", ["army_id"], name: "index_extra_item_categories_on_army_id", using: :btree
 
+  create_table "extra_item_category_translations", force: :cascade do |t|
+    t.integer "extra_item_category_id", limit: 4,   null: false
+    t.string  "locale",                 limit: 255, null: false
+    t.string  "name",                   limit: 255, null: false
+  end
+
+  add_index "extra_item_category_translations", ["extra_item_category_id"], name: "index_fe18d90e32ab2fbb564dd3d49e312483fffe727a", using: :btree
+  add_index "extra_item_category_translations", ["locale"], name: "index_extra_item_category_translations_on_locale", using: :btree
+
+  create_table "extra_item_translations", force: :cascade do |t|
+    t.integer "extra_item_id", limit: 4,   null: false
+    t.string  "locale",        limit: 255, null: false
+    t.string  "name",          limit: 255, null: false
+  end
+
+  add_index "extra_item_translations", ["extra_item_id"], name: "index_extra_item_translations_on_extra_item_id", using: :btree
+  add_index "extra_item_translations", ["locale"], name: "index_extra_item_translations_on_locale", using: :btree
+
   create_table "extra_items", force: :cascade do |t|
-    t.integer "extra_item_category_id", limit: 4,                           null: false
-    t.string  "name",                   limit: 255,                         null: false
-    t.decimal "value_points",                       precision: 8, scale: 2, null: false
+    t.integer "extra_item_category_id", limit: 4,                         null: false
+    t.decimal "value_points",                     precision: 8, scale: 2, null: false
   end
 
   add_index "extra_items", ["extra_item_category_id"], name: "index_extra_items_on_extra_item_category_id", using: :btree
 
   create_table "magic_item_categories", force: :cascade do |t|
-    t.string "name", limit: 255, null: false
   end
 
+  create_table "magic_item_category_translations", force: :cascade do |t|
+    t.integer "magic_item_category_id", limit: 4,   null: false
+    t.string  "locale",                 limit: 255, null: false
+    t.string  "name",                   limit: 255, null: false
+  end
+
+  add_index "magic_item_category_translations", ["locale"], name: "index_magic_item_category_translations_on_locale", using: :btree
+  add_index "magic_item_category_translations", ["magic_item_category_id"], name: "index_95ba1a02dda97edf72f3c4182315767fd2f0c3e5", using: :btree
+
+  create_table "magic_item_translations", force: :cascade do |t|
+    t.integer "magic_item_id", limit: 4,   null: false
+    t.string  "locale",        limit: 255, null: false
+    t.string  "name",          limit: 255, null: false
+  end
+
+  add_index "magic_item_translations", ["locale"], name: "index_magic_item_translations_on_locale", using: :btree
+  add_index "magic_item_translations", ["magic_item_id"], name: "index_magic_item_translations_on_magic_item_id", using: :btree
+
   create_table "magic_items", force: :cascade do |t|
-    t.integer "magic_item_category_id", limit: 4,                                           null: false
+    t.integer "magic_item_category_id", limit: 4,                                         null: false
     t.integer "army_id",                limit: 4
-    t.string  "name",                   limit: 255,                                         null: false
-    t.decimal "value_points",                       precision: 8, scale: 2,                 null: false
+    t.decimal "value_points",                     precision: 8, scale: 2,                 null: false
     t.integer "override_id",            limit: 4
-    t.boolean "is_multiple",                                                default: false, null: false
+    t.boolean "is_multiple",                                              default: false, null: false
   end
 
   add_index "magic_items", ["army_id"], name: "index_magic_items_on_army_id", using: :btree
   add_index "magic_items", ["magic_item_category_id"], name: "index_magic_items_on_magic_item_category_id", using: :btree
   add_index "magic_items", ["override_id"], name: "index_magic_items_on_override_id", using: :btree
 
+  create_table "magic_standard_translations", force: :cascade do |t|
+    t.integer "magic_standard_id", limit: 4,   null: false
+    t.string  "locale",            limit: 255, null: false
+    t.string  "name",              limit: 255, null: false
+  end
+
+  add_index "magic_standard_translations", ["locale"], name: "index_magic_standard_translations_on_locale", using: :btree
+  add_index "magic_standard_translations", ["magic_standard_id"], name: "index_magic_standard_translations_on_magic_standard_id", using: :btree
+
   create_table "magic_standards", force: :cascade do |t|
     t.integer "army_id",      limit: 4
-    t.string  "name",         limit: 255, null: false
-    t.integer "value_points", limit: 4,   null: false
+    t.integer "value_points", limit: 4, null: false
     t.integer "override_id",  limit: 4
   end
 
   add_index "magic_standards", ["army_id"], name: "index_magic_standards_on_army_id", using: :btree
   add_index "magic_standards", ["override_id"], name: "index_magic_standards_on_override_id", using: :btree
 
+  create_table "special_rule_translations", force: :cascade do |t|
+    t.integer "special_rule_id", limit: 4,   null: false
+    t.string  "locale",          limit: 255, null: false
+    t.string  "name",            limit: 255, null: false
+  end
+
+  add_index "special_rule_translations", ["locale"], name: "index_special_rule_translations_on_locale", using: :btree
+  add_index "special_rule_translations", ["special_rule_id"], name: "index_special_rule_translations_on_special_rule_id", using: :btree
+
   create_table "special_rules", force: :cascade do |t|
-    t.integer "unit_id",  limit: 4,   null: false
-    t.string  "name",     limit: 255, null: false
-    t.integer "position", limit: 4,   null: false
+    t.integer "unit_id",  limit: 4, null: false
+    t.integer "position", limit: 4, null: false
     t.integer "troop_id", limit: 4
   end
 
   add_index "special_rules", ["troop_id"], name: "index_special_rules_on_troop_id", using: :btree
   add_index "special_rules", ["unit_id"], name: "index_special_rules_on_unit_id", using: :btree
 
+  create_table "troop_translations", force: :cascade do |t|
+    t.integer "troop_id", limit: 4,   null: false
+    t.string  "locale",   limit: 255, null: false
+    t.string  "name",     limit: 255, null: false
+  end
+
+  add_index "troop_translations", ["locale"], name: "index_troop_translations_on_locale", using: :btree
+  add_index "troop_translations", ["troop_id"], name: "index_troop_translations_on_troop_id", using: :btree
+
+  create_table "troop_type_translations", force: :cascade do |t|
+    t.integer "troop_type_id", limit: 4,   null: false
+    t.string  "locale",        limit: 255, null: false
+    t.string  "name",          limit: 255, null: false
+  end
+
+  add_index "troop_type_translations", ["locale"], name: "index_troop_type_translations_on_locale", using: :btree
+  add_index "troop_type_translations", ["troop_type_id"], name: "index_troop_type_translations_on_troop_type_id", using: :btree
+
   create_table "troop_types", force: :cascade do |t|
-    t.string "name", limit: 255, null: false
   end
 
   create_table "troops", force: :cascade do |t|
-    t.integer "unit_id",        limit: 4,                           null: false
+    t.integer "unit_id",        limit: 4,                         null: false
     t.integer "troop_type_id",  limit: 4
-    t.string  "name",           limit: 255,                         null: false
-    t.decimal "value_points",               precision: 8, scale: 2
-    t.integer "position",       limit: 4,                           null: false
+    t.decimal "value_points",             precision: 8, scale: 2
+    t.integer "position",       limit: 4,                         null: false
     t.string  "M",              limit: 5
     t.string  "WS",             limit: 5
     t.string  "BS",             limit: 5
@@ -224,40 +296,64 @@ ActiveRecord::Schema.define(version: 20160620203626) do
   add_index "troops", ["unit_option_id"], name: "index_troops_on_unit_option_id", using: :btree
 
   create_table "unit_categories", force: :cascade do |t|
-    t.string  "name",      limit: 255, null: false
     t.integer "min_quota", limit: 4
     t.integer "max_quota", limit: 4
   end
 
+  create_table "unit_category_translations", force: :cascade do |t|
+    t.integer "unit_category_id", limit: 4,   null: false
+    t.string  "locale",           limit: 255, null: false
+    t.string  "name",             limit: 255, null: false
+  end
+
+  add_index "unit_category_translations", ["locale"], name: "index_unit_category_translations_on_locale", using: :btree
+  add_index "unit_category_translations", ["unit_category_id"], name: "index_unit_category_translations_on_unit_category_id", using: :btree
+
+  create_table "unit_option_translations", force: :cascade do |t|
+    t.integer "unit_option_id", limit: 4,   null: false
+    t.string  "locale",         limit: 255, null: false
+    t.string  "name",           limit: 255, null: false
+  end
+
+  add_index "unit_option_translations", ["locale"], name: "index_unit_option_translations_on_locale", using: :btree
+  add_index "unit_option_translations", ["unit_option_id"], name: "index_unit_option_translations_on_unit_option_id", using: :btree
+
   create_table "unit_options", force: :cascade do |t|
-    t.integer "unit_id",            limit: 4,                                           null: false
+    t.integer "unit_id",            limit: 4,                                         null: false
     t.integer "parent_id",          limit: 4
-    t.string  "name",               limit: 255,                                         null: false
-    t.decimal "value_points",                   precision: 8, scale: 2
-    t.integer "position",           limit: 4,                                           null: false
-    t.boolean "is_per_model",                                                           null: false
-    t.boolean "is_magic_items",                                                         null: false
-    t.boolean "is_magic_standards",                                                     null: false
-    t.boolean "is_unique_choice",                                                       null: false
-    t.boolean "is_extra_items",                                                         null: false
+    t.decimal "value_points",                 precision: 8, scale: 2
+    t.integer "position",           limit: 4,                                         null: false
+    t.boolean "is_per_model",                                                         null: false
+    t.boolean "is_magic_items",                                                       null: false
+    t.boolean "is_magic_standards",                                                   null: false
+    t.boolean "is_unique_choice",                                                     null: false
+    t.boolean "is_extra_items",                                                       null: false
     t.integer "mount_id",           limit: 4
-    t.boolean "is_multiple",                                            default: false, null: false
+    t.boolean "is_multiple",                                          default: false, null: false
   end
 
   add_index "unit_options", ["mount_id"], name: "index_unit_options_on_mount_id", using: :btree
   add_index "unit_options", ["parent_id"], name: "index_unit_options_on_parent_id", using: :btree
   add_index "unit_options", ["unit_id"], name: "index_unit_options_on_unit_id", using: :btree
 
+  create_table "unit_translations", force: :cascade do |t|
+    t.integer "unit_id", limit: 4,     null: false
+    t.string  "locale",  limit: 255,   null: false
+    t.string  "name",    limit: 255,   null: false
+    t.string  "magic",   limit: 255
+    t.text    "notes",   limit: 65535
+  end
+
+  add_index "unit_translations", ["locale"], name: "index_unit_translations_on_locale", using: :btree
+  add_index "unit_translations", ["unit_id"], name: "index_unit_translations_on_unit_id", using: :btree
+
   create_table "units", force: :cascade do |t|
-    t.integer "army_id",          limit: 4,                                             null: false
-    t.integer "unit_category_id", limit: 4,                                             null: false
-    t.string  "name",             limit: 255,                                           null: false
-    t.integer "min_size",         limit: 4,                             default: 1,     null: false
+    t.integer "army_id",          limit: 4,                                         null: false
+    t.integer "unit_category_id", limit: 4,                                         null: false
+    t.integer "min_size",         limit: 4,                         default: 1,     null: false
     t.integer "max_size",         limit: 4
-    t.decimal "value_points",                   precision: 8, scale: 2
-    t.string  "magic",            limit: 255
-    t.text    "notes",            limit: 65535
-    t.boolean "is_unique",                                              default: false, null: false
+    t.decimal "value_points",               precision: 8, scale: 2
+    t.boolean "is_unique",                                          default: false, null: false
   end
 
   add_index "units", ["army_id"], name: "index_units_on_army_id", using: :btree

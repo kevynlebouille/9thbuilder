@@ -2,5 +2,9 @@ class ExtraItemCategory < ActiveRecord::Base
   belongs_to :army
   has_many :extra_items, dependent: :destroy
 
-  validates :army_id, :name, presence: true
+  active_admin_translates :name do
+    validates :name, presence: true
+  end
+
+  validates :army_id, presence: true
 end

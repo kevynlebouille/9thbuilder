@@ -1,5 +1,7 @@
 class MagicItemCategory < ActiveRecord::Base
   has_many :magic_items, dependent: :destroy
 
-  validates :name, presence: true
+  active_admin_translates :name do
+    validates :name, presence: true
+  end
 end

@@ -10,7 +10,11 @@ class Unit < ActiveRecord::Base
 
   normalize_attributes :magic, :notes
 
-  validates :army_id, :unit_category_id, :name, :min_size, presence: true
+  active_admin_translates :name, :magic, :notes do
+    validates :name, presence: true
+  end
+
+  validates :army_id, :unit_category_id, :min_size, presence: true
   validates :min_size, numericality: { greater_than_or_equal_to: 1, only_integer: true }
   validates :max_size, numericality: { greater_than_or_equal_to: :min_size, only_integer: true, allow_nil: true }
   validates :value_points, numericality: { greater_than_or_equal_to: 0, allow_nil: true }

@@ -1,5 +1,7 @@
 class TroopType < ActiveRecord::Base
   has_many :troops, dependent: :destroy
 
-  validates :name, presence: true
+  active_admin_translates :name do
+    validates :name, presence: true
+  end
 end

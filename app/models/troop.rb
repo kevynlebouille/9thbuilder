@@ -5,7 +5,11 @@ class Troop < ActiveRecord::Base
   has_many :equipments, dependent: :nullify
   has_many :special_rules, dependent: :nullify
 
-  validates :unit_id, :name, presence: true
+  active_admin_translates :name do
+    validates :name, presence: true
+  end
+
+  validates :unit_id, presence: true
   validates :value_points, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
   validates :position, numericality: { greater_than_or_equal_to: 1, only_integer: true, allow_nil: true }
 

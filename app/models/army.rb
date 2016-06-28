@@ -6,8 +6,8 @@ class Army < ActiveRecord::Base
   has_many :units, -> { order 'name' }, dependent: :destroy
   has_many :favorite_users, class_name: 'User', foreign_key: 'favorite_army_id', dependent: :nullify
 
-  active_admin_translates :name, fallbacks_for_empty_translations: true do
-    validates_presence_of :name
+  active_admin_translates :name do
+    validates :name, presence: true
   end
 
   scope :disabled, -> { where('id NOT IN (SELECT DISTINCT army_id FROM units)') }

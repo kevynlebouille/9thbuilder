@@ -2,7 +2,11 @@ class Equipment < ActiveRecord::Base
   belongs_to :unit
   belongs_to :troop
 
-  validates :unit_id, :name, presence: true
+  active_admin_translates :name do
+    validates :name, presence: true
+  end
+
+  validates :unit_id, presence: true
   validates :position, numericality: { greater_than_or_equal_to: 1, only_integer: true, allow_nil: true }
 
   acts_as_list scope: :unit

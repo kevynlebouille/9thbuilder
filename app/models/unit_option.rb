@@ -7,7 +7,11 @@ class UnitOption < ActiveRecord::Base
   has_many :army_list_unit_unit_options, dependent: :destroy
   has_many :army_list_units, through: :army_list_unit_unit_options
 
-  validates :unit_id, :name, presence: true
+  active_admin_translates :name do
+    validates :name, presence: true
+  end
+
+  validates :unit_id, presence: true
   validates :value_points, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
   validates :position, numericality: { greater_than_or_equal_to: 1, only_integer: true, allow_nil: true }
   validates :is_per_model, inclusion: { in: [true, false] }
