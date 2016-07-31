@@ -46,6 +46,20 @@ ActiveAdmin.setup do |config|
   # This will ONLY change the title for the admin section. Other
   # namespaces will continue to use the main "site_title" configuration.
 
+  config.namespace :admin do |admin|
+    admin.build_menu :utility_navigation do |menu|
+      menu.add label: 'Languages' do |lang|
+        lang.add label: '<i class="flag flag-en" title="English"></i> English'.html_safe, url: -> { url_for(locale: 'en') }, id: 'i18n-en', priority: 1
+        lang.add label: '<i class="flag flag-fr" title="French"></i> French'.html_safe, url: -> { url_for(locale: 'fr') }, id: 'i18n-fr', priority: 2
+      end
+
+      menu.add label: -> { display_name current_active_admin_user },
+               url: '#', id: 'current_user', if: -> { current_active_admin_user? }
+
+      admin.add_logout_button_to_menu menu
+    end
+  end
+
   # == User Authentication
   #
   # Active Admin will automatically call an authentication
