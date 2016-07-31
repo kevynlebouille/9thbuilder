@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   layout -> (controller) { controller.request.xhr? ? false : 'application' }
 
   def set_locale
-    I18n.locale = params[:locale] || http_accept_language.compatible_language_from(I18n.available_locales) || I18n.default_locale
+    I18n.locale = params[:locale] || current_user.try(:locale) || http_accept_language.compatible_language_from(I18n.available_locales) || I18n.default_locale
   end
 
   protected

@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
 
+  normalize_attributes :name, :locale
+
   def update_with_password(params = {})
     params.delete :current_password
     update_without_password params

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628204302) do
+ActiveRecord::Schema.define(version: 20160712103343) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.integer  "resource_id",   limit: 4,     null: false
@@ -377,6 +377,7 @@ ActiveRecord::Schema.define(version: 20160628204302) do
     t.datetime "updated_at"
     t.string   "name",                   limit: 255
     t.integer  "favorite_army_id",       limit: 4
+    t.string   "locale",                 limit: 255
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

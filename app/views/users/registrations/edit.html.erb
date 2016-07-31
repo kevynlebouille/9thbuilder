@@ -14,6 +14,9 @@
   <p><%= f.label :favorite_army_id, t('profile.form.favorite_army') %><br />
   <%= f.collection_select :favorite_army_id, Army.all.order(:name), :id, :name, include_blank: true %></p>
 
+  <p><%= f.label :locale, t('profile.form.locale') %><br />
+  <%= f.select :locale, [['French', 'fr'], ['English', 'en']], include_blank: true %></p>
+
   <p><i><%=t 'profile.form.password_help' %></i><br />
   <%= f.password_field :password, placeholder: t('profile.form.password'), autocomplete: "off" %></p>
 
