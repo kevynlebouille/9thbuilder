@@ -1,5 +1,5 @@
 ActiveAdmin.register Troop do
-  menu priority: 4
+  menu priority: 4, url: -> { admin_troops_path }
 
   permit_params :unit_id, :unit_option_id, :troop_type_id, :name, :M, :WS, :BS, :S, :T, :W, :I, :A, :LD, :value_points, :min_size, :position, translations_attributes: [:id, :locale, :name, :_destroy]
 

@@ -1,5 +1,5 @@
 ActiveAdmin.register Army do
-  menu priority: 2
+  menu priority: 2, url: -> { admin_armies_path }
 
   permit_params :name, translations_attributes: [:id, :locale, :name, :_destroy]
 

@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  menu priority: 9
+  menu priority: 9, url: -> { admin_users_path }
 
   filter :email
   filter :name

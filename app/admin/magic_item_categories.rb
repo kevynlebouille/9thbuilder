@@ -1,5 +1,5 @@
 ActiveAdmin.register MagicItemCategory do
-  menu parent: 'Magic Items'
+  menu parent: 'Magic Items', url: -> { admin_magic_item_categories_path }
 
   permit_params :name, translations_attributes: [:id, :locale, :name, :_destroy]
 

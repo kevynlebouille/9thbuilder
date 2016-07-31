@@ -1,5 +1,5 @@
 ActiveAdmin.register TroopType do
-  menu parent: 'Troops'
+  menu parent: 'Troops', url: -> { admin_troop_types_path }
 
   permit_params :name, translations_attributes: [:id, :locale, :name, :_destroy]
 

@@ -1,5 +1,5 @@
 ActiveAdmin.register Unit do
-  menu priority: 3
+  menu priority: 3, url: -> { admin_units_path }
 
   permit_params :army_id, :unit_category_id, :name, :value_points, :min_size, :max_size, :magic, :notes, :is_unique, translations_attributes: [:id, :locale, :name, :magic, :notes, :_destroy]
 

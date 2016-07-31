@@ -1,5 +1,5 @@
 ActiveAdmin.register MagicItem do
-  menu priority: 8
+  menu priority: 8, url: -> { admin_magic_items_path }
 
   permit_params :army_id, :magic_item_category_id, :override_id, :name, :value_points, :is_multiple, translations_attributes: [:id, :locale, :name, :_destroy]
 

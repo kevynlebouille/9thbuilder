@@ -1,5 +1,5 @@
 ActiveAdmin.register ExtraItemCategory do
-  menu parent: 'Extra Items'
+  menu parent: 'Extra Items', url: -> { admin_extra_item_categories_path }
 
   permit_params :army_id, :name, translations_attributes: [:id, :locale, :name, :_destroy]
 

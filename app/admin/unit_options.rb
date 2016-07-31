@@ -1,5 +1,5 @@
 ActiveAdmin.register UnitOption do
-  menu parent: 'Units'
+  menu parent: 'Units', url: -> { admin_unit_options_path }
 
   permit_params :unit_id, :parent_id, :mount_id, :name, :value_points, :position, :is_per_model, :is_multiple, :is_magic_items, :is_magic_standards, :is_extra_items, :is_unique_choice, translations_attributes: [:id, :locale, :name, :_destroy]
 

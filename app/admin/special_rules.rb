@@ -1,5 +1,5 @@
 ActiveAdmin.register SpecialRule do
-  menu priority: 6
+  menu priority: 6, url: -> { admin_special_rules_path }
 
   permit_params :unit_id, :troop_id, :name, :position, translations_attributes: [:id, :locale, :name, :_destroy]
 

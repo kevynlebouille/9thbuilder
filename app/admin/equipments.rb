@@ -1,5 +1,5 @@
 ActiveAdmin.register Equipment do
-  menu priority: 5
+  menu priority: 5, url: -> { admin_equipments_path }
 
   permit_params :unit_id, :troop_id, :name, :position, translations_attributes: [:id, :locale, :name, :_destroy]
 

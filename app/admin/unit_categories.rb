@@ -1,5 +1,5 @@
 ActiveAdmin.register UnitCategory do
-  menu parent: 'Units'
+  menu parent: 'Units', url: -> { admin_unit_categories_path }
 
   permit_params :name, :min_quota, :max_quota, translations_attributes: [:id, :locale, :name, :_destroy]
 

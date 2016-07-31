@@ -1,5 +1,5 @@
 ActiveAdmin.register ExtraItem do
-  menu priority: 7
+  menu priority: 7, url: -> { admin_extra_items_path }
 
   permit_params :extra_item_category_id, :name, :value_points, translations_attributes: [:id, :locale, :name, :_destroy]
 
