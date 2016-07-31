@@ -3,7 +3,7 @@
 <div id="subheader" class="grid_14">
   <%= search_form_for @search do |f| %>
     <p>
-      <%= f.label :army_id_eq, t('army_list.index.filter') %> <%= f.select :army_id_eq, options_from_collection_for_select(current_user.armies.order('name'), :id, :name, f.object.army_id_eq), { disabled: -> (army) { army.units.empty? } , include_blank: true } %>
+      <%= f.label :army_id_eq, t('army_list.index.filter') %> <%= f.select :army_id_eq, options_from_collection_for_select(current_user.armies.includes(:translations).order(:name), :id, :name, f.object.army_id_eq), { disabled: -> (army) { army.units.empty? } , include_blank: true } %>
       <%= f.label :name_or_notes_cont, t('army_list.index.and') %> <%= f.search_field :name_or_notes_cont, { placeholder: t('army_list.index.name_or_notes') } %>
       <%= f.submit t('army_list.index.search') %>
     </p>

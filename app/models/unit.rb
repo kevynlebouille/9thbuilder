@@ -30,8 +30,9 @@ class Unit < ActiveRecord::Base
       [
         unit_category.name,
         unit_category.units
+          .includes(:translations)
           .where(army_id: army_list.army)
-          .order('is_unique', 'name')
+          .order('is_unique', 'unit_translations.name')
           .reject { |unit| unit.in?(army_list_units) if unit.is_unique }
           .map { |u| [u.name, u.id] }
       ]

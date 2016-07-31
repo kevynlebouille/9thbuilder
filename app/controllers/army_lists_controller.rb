@@ -11,7 +11,7 @@ class ArmyListsController < ApplicationController
       params[:q][:army_id_eq] = current_user.favorite_army.try(:id)
     end
 
-    @search = current_user.army_lists.includes(:army).order('value_points DESC').search(params[:q])
+    @search = current_user.army_lists.order('value_points DESC').search(params[:q])
     @army_lists = @search.result
 
     @army = Army.find(params[:q][:army_id_eq]) unless params[:q][:army_id_eq].blank?

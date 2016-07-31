@@ -21,9 +21,9 @@ class MagicItem < ActiveRecord::Base
       end
     else
       if value_points_limit.nil?
-        includes(:translations).where('army_id = :army_id OR (army_id IS NULL AND id NOT IN (SELECT override_id FROM magic_items WHERE army_id = :army_id AND override_id IS NOT NULL))', army_id: army).order('value_points DESC', 'magic_items.name')
+        includes(:translations).where('army_id = :army_id OR (army_id IS NULL AND magic_items.id NOT IN (SELECT override_id FROM magic_items WHERE army_id = :army_id AND override_id IS NOT NULL))', army_id: army).order('value_points DESC', 'magic_item_translations.name')
       else
-       includes(:translations). where('army_id = :army_id OR (army_id IS NULL AND id NOT IN (SELECT override_id FROM magic_items WHERE army_id = :army_id AND override_id IS NOT NULL))', army_id: army).where('value_points <= ?', value_points_limit).order('value_points DESC', 'magic_items.name')
+       includes(:translations). where('army_id = :army_id OR (army_id IS NULL AND magic_items.id NOT IN (SELECT override_id FROM magic_items WHERE army_id = :army_id AND override_id IS NOT NULL))', army_id: army).where('value_points <= ?', value_points_limit).order('value_points DESC', 'magic_item_translations.name')
       end
     end
   }

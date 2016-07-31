@@ -3,7 +3,7 @@ class Army < ActiveRecord::Base
   has_many :magic_items, dependent: :destroy
   has_many :magic_standards, dependent: :destroy
   has_many :extra_item_categories, dependent: :destroy
-  has_many :units, -> { order 'name' }, dependent: :destroy
+  has_many :units, -> { includes(:translations).order(:name) }, dependent: :destroy
   has_many :favorite_users, class_name: 'User', foreign_key: 'favorite_army_id', dependent: :nullify
 
   active_admin_translates :name do

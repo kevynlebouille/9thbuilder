@@ -99,7 +99,7 @@
 
     <div class="clear"></div>
 
-    <% if @army_list_unit.unit.magic? %>
+    <% if @army_list_unit.unit.translation.magic? %>
       <p><%= f.text_area :magic, :placeholder => t('army_list_unit.edit.form.magic'), :size => "" %></p>
     <% end %>
 

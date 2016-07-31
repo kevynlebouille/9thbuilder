@@ -12,9 +12,9 @@ class MagicStandard < ActiveRecord::Base
 
   scope :available_for, lambda { |army, value_points_limit|
     if value_points_limit.nil?
-      includes(:translations).where('army_id = :army_id OR (army_id IS NULL AND id NOT IN (SELECT override_id FROM magic_standards WHERE army_id = :army_id AND override_id IS NOT NULL))', army_id: army).order('value_points DESC', 'magic_standard_translations.name')
+      includes(:translations).where('army_id = :army_id OR (army_id IS NULL AND magic_standards.id NOT IN (SELECT override_id FROM magic_standards WHERE army_id = :army_id AND override_id IS NOT NULL))', army_id: army).order('value_points DESC', 'magic_standard_translations.name')
     else
-      includes(:translations).where('army_id = :army_id OR (army_id IS NULL AND id NOT IN (SELECT override_id FROM magic_standards WHERE army_id = :army_id AND override_id IS NOT NULL))', army_id: army).where('value_points <= ?', value_points_limit).order('value_points DESC', 'magic_standard_translations.name')
+      includes(:translations).where('army_id = :army_id OR (army_id IS NULL AND magic_standards.id NOT IN (SELECT override_id FROM magic_standards WHERE army_id = :army_id AND override_id IS NOT NULL))', army_id: army).where('value_points <= ?', value_points_limit).order('value_points DESC', 'magic_standard_translations.name')
     end
   }
 end
