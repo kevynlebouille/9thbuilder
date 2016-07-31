@@ -4,6 +4,6 @@ module ApplicationHelper
   end
 
   def transliterate(str)
-    ActiveSupport::Inflector.transliterate(str)
+    I18n.transliterate(str) unless str.nil?
   end
 end
